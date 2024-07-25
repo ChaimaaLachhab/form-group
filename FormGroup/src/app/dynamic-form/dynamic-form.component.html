@@ -1,0 +1,23 @@
+<!-- dynamic-form.component.html -->
+<h2>Dynamic Form</h2>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <label for="name">Name:</label>
+  <input id="name" formControlName="name">
+  <div *ngIf="userForm.get('name')?.invalid && (userForm.get('name')?.dirty || userForm.get('name')?.touched)">
+    <small *ngIf="userForm.get('name')?.errors?.['required']">Name is required.</small>
+  </div>
+
+  <div formArrayName="skills">
+    <div *ngFor="let skill of skills.controls; let i = index">
+      <label for="skill-{{i}}">Skill {{i + 1}}:</label>
+      <input [formControlName]="i" id="skill-{{i}}">
+      <div *ngIf="skill.invalid && (skill.dirty || skill.touched)">
+        <small *ngIf="skill.errors?.['required']">Skill is required.</small>
+      </div>
+      <button type="button" (click)="removeSkill(i)">Remove</button>
+    </div>
+  </div>
+
+  <button type="button" (click)="addSkill()">Add Skill</button>
+  <button type="submit" [disabled]="userForm.invalid">Submit</button>
+</form>

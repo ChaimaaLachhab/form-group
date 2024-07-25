@@ -1,0 +1,31 @@
+<!-- signup-template.component.html -->
+<form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+  <div>
+    <label for="username">Username:</label>
+    <input id="username" name="username" ngModel required minlength="3">
+    <div *ngIf="signupForm.controls['username']?.invalid && signupForm.controls['username']?.touched">
+      <small *ngIf="signupForm.controls['username']?.errors?.['required']">Username is required.</small>
+      <small *ngIf="signupForm.controls['username']?.errors?.['minlength']">Username must be at least 3 characters long.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" name="email" ngModel required email>
+    <div *ngIf="signupForm.controls['email']?.invalid && signupForm.controls['email']?.touched">
+      <small *ngIf="signupForm.controls['email']?.errors?.['required']">Email is required.</small>
+      <small *ngIf="signupForm.controls['email']?.errors?.['email']">Invalid email format.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password:</label>
+    <input id="password" name="password" ngModel required minlength="8">
+    <div *ngIf="signupForm.controls['password']?.invalid && signupForm.controls['password']?.touched">
+      <small *ngIf="signupForm.controls['password']?.errors?.['required']">Password is required.</small>
+      <small *ngIf="signupForm.controls['password']?.errors?.['minlength']">Password must be at least 8 characters long.</small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+</form>
